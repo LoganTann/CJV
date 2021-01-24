@@ -10,7 +10,7 @@ public class Attaque {
 	}
 	
 	public String toString() {
-		return this.nom + " (" + this.damage + " points de dégats)"; 
+		return this.nom + " (" + this.damage + " points de dÃ©gats)"; 
 	}
 	
 	/*

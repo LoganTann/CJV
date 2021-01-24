@@ -14,10 +14,12 @@ public class Joueur {
 	private ArrayList<Attaque> attaques;
 	private int nbAttaquesMax;
 	
+	private float statAttck, statDef, statSpeed;
+	
 	/**
 	 * @brief Ceci est le constructeur de mon personnage
 	 */
-	public Joueur(String nom, int PV) {
+	public Joueur(String nom, int PV, double StatAttck, double StatDef, double statSpeed) {
 		this.nom = nom;
 		this.PV = PV;
 		
@@ -26,7 +28,7 @@ public class Joueur {
 	}
 	
 	/**
-	 * @brief Ceci est l'affichage de l'état de mon perso
+	 * @brief Ceci est l'affichage de l'Ã©tat de mon perso
 	 */
 	public String toString() {
 		String retval = "";
@@ -54,10 +56,10 @@ public class Joueur {
 	
 	/**
 	 * @brief Attaque un ennemi
-	 * @param enemy la référence vers l'entité à attaquer 
-	 * @param idAttaque l'identifiant de l'attaque à employer
-	 * @return String l'affichage textuel de l'action employée
-	 * @see readAttaque pour obtenir un indice d'attaque à partir de l'entrée utilisateur
+	 * @param enemy la rÃ©fÃ©rence vers l'entitÃ© Ã  attaquer 
+	 * @param idAttaque l'identifiant de l'attaque Ã  employer
+	 * @return String l'affichage textuel de l'action employÃ©e
+	 * @see readAttaque pour obtenir un indice d'attaque Ã  partir de l'entrÃ©e utilisateur
 	 */
 	public String attaquer(Joueur enemy, int idAttaque) {
 		// juste pour tester les string builders mais en vrai une String suffit
@@ -70,13 +72,13 @@ public class Joueur {
 		int actualHP = enemy.getPV();
 		enemy.setPV(actualHP - damage);
 		
-		retval.append( "\nCela effectue " + damage + " points de dégats !");
+		retval.append( "\nCela effectue " + damage + " points de dÃ©gats !");
 		return retval.toString();
 	}
 	
 	/**
-	 * @brief Ajoute une attaque. Limité à [this.nbAttaquesMax] ajouts.
-	 * @param attaque : l'attaque à ajouter
+	 * @brief Ajoute une attaque. LimitÃ© Ã  [this.nbAttaquesMax] ajouts.
+	 * @param attaque : l'attaque Ã  ajouter
 	 * @return String : affichage sous forme d'une string
 	 */
 	public String addAttaque(Attaque attaque) {
@@ -89,32 +91,6 @@ public class Joueur {
 		return "Erreur : pas possible d'ajouter plus de " + this.nbAttaquesMax + "attaques !";
 	}
 	
-	/**
-	 * @brief Obtenir un indice d'attaque à partir de l'entrée utilisateur
-	 * @param sc : un scanner qui permettra de lire aisément le flot d'entrée
-	 * @return L'identifiant de l'attaque mentionnée par l'utilisateur
-	 */
-	public int readAttaque(Scanner sc) {
-		// todo : flux de sortie comme avec la sda et ostream
-		System.out.println("Choisissez une attaque parmi vos " + this.attackList());
-		
-		while (true) {
-			System.out.print("Attaque ? : ");
-			String labelAttaque = sc.next("\\w+");
-			
-			// recherche linéaire de l'attaque et retourne l'ID si trouvé
-			// on aurait pu mettre la suite dans un bout de code différent
-			int retval = 0;
-			for (Attaque attaque : this.attaques) {
-				if (attaque.getNom().toLowerCase().equals( labelAttaque.toLowerCase() )) {
-					return retval;
-				}
-				retval++;
-			}
-			
-			System.out.println("Entrée invalide !");
-		}
-	}
 	
 	
 
@@ -138,9 +114,13 @@ public class Joueur {
 	}
 
 	/**
-	 * @return Vrai si l'entité est vivante, faux sinon
+	 * @return Vrai si l'entitÃ© est vivante, faux sinon
 	 */
 	public boolean estVivant() {
 		return this.PV > 0;
+	}
+
+	public ArrayList<Attaque> getAttaques() {
+		return attaques;
 	}
 }
